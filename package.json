@@ -1,6 +1,6 @@
 {
   "name": "confidant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Obsidian plugin: reflective summaries of your daily journal at weekly, biweekly, monthly and yearly cadences.",
   "main": "main.js",
   "scripts": {
