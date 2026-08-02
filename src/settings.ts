@@ -40,8 +40,8 @@ export interface JournalPluginSettings {
 	clientName: string;
 	/** 1 = very gentle and hedged, 5 = blunt and challenging. */
 	directness: number;
-	/** 1 = very expansive, 5 = very brief. */
-	brevity: number;
+	/** 1 = very brief, 5 = very expansive. */
+	length: number;
 
 	// --- Mood classification (one LLM call per journal entry) ---
 	enableMoodClassification: boolean;
@@ -79,11 +79,10 @@ export const DEFAULT_SETTINGS: JournalPluginSettings = {
 	openRouterApiKey: "",
 	openRouterModel: "anthropic/claude-sonnet-4.6",
 
-	// Blank = whole vault. Left unset rather than guessing a folder name that
-	// won't exist for most installs — set explicitly on first run.
-	sourceFolder: "",
-	includeTags: [],
-	tagMatchMode: "frontmatter",
+	// "/" = whole vault (normalized the same as blank by inSourceFolder).
+	sourceFolder: "/",
+	includeTags: ["journal"],
+	tagMatchMode: "both",
 
 	enableWeekly: true,
 	enableBiweekly: false,
@@ -98,7 +97,7 @@ export const DEFAULT_SETTINGS: JournalPluginSettings = {
 	narrativeVoice: "first",
 	clientName: "",
 	directness: 3,
-	brevity: 3,
+	length: 3,
 
 	enableMoodClassification: true,
 

@@ -1,7 +1,7 @@
 import { App, DropdownComponent, PluginSettingTab, Setting, Notice } from "obsidian";
 import type ConfidantPlugin from "../main";
 import { NarrativeVoice, TagMatchMode } from "../settings";
-import { BREVITY_LABELS, DIRECTNESS_LABELS } from "../prompts";
+import { LENGTH_LABELS, DIRECTNESS_LABELS } from "../prompts";
 import { CUSTOM_PRESET_ID, PROMPT_PRESETS, detectPresetId, findPreset } from "../promptPresets";
 import { FolderSuggest } from "./folderSuggest";
 
@@ -347,17 +347,17 @@ export class ConfidantSettingTab extends PluginSettingTab {
 				})
 		);
 
-		const brevity = new Setting(containerEl)
+		const length = new Setting(containerEl)
 			.setName("Length")
-			.setDesc(BREVITY_LABELS[s.brevity]);
-		brevity.addSlider((sl) =>
+			.setDesc(LENGTH_LABELS[s.length]);
+		length.addSlider((sl) =>
 			sl
 				.setLimits(1, 5, 1)
-				.setValue(s.brevity)
+				.setValue(s.length)
 				.setDynamicTooltip()
 				.onChange(async (v) => {
-					s.brevity = v;
-					brevity.setDesc(BREVITY_LABELS[v]);
+					s.length = v;
+					length.setDesc(LENGTH_LABELS[v]);
 					await save();
 				})
 		);

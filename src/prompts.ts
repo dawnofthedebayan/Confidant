@@ -21,13 +21,13 @@ export const DIRECTNESS_LABELS: Record<number, string> = {
 	5: "Very direct — blunt; challenges avoidance and says the hard thing outright.",
 };
 
-/** Human-readable meaning of each brevity step, shown next to the slider. */
-export const BREVITY_LABELS: Record<number, string> = {
-	1: "Very expansive — follows every thread in depth (~900-1300 words).",
-	2: "Detailed — thorough, with room to develop ideas (~600-900 words).",
+/** Human-readable meaning of each length step, shown next to the slider. */
+export const LENGTH_LABELS: Record<number, string> = {
+	1: "Very brief — tight and essential, minimal elaboration (~120-200 words).",
+	2: "Concise — only the observations that earn their place (~250-350 words).",
 	3: "Balanced — substantial but focused (~400-600 words).",
-	4: "Concise — only the observations that earn their place (~250-350 words).",
-	5: "Very brief — tight and essential, minimal elaboration (~120-200 words).",
+	4: "Detailed — thorough, with room to develop ideas (~600-900 words).",
+	5: "Very expansive — follows every thread in depth (~900-1300 words).",
 };
 
 const DIRECTNESS_DIRECTIVE: Record<number, string> = {
@@ -38,12 +38,12 @@ const DIRECTNESS_DIRECTIVE: Record<number, string> = {
 	5: "Be very direct and unsparing. Say the thing that is difficult to hear. Name self-deception, avoidance and contradiction outright, and challenge comfortable stories the client is telling themselves. Stay respectful and never contemptuous — the bluntness is in service of clarity, not judgement.",
 };
 
-const BREVITY_DIRECTIVE: Record<number, string> = {
-	1: "Write expansively, roughly 900-1300 words. Follow threads in depth and develop each observation fully.",
-	2: "Write a detailed reflection, roughly 600-900 words.",
+const LENGTH_DIRECTIVE: Record<number, string> = {
+	1: "Be very brief: roughly 120-200 words. Essential observations only, tightly written, no preamble and no restating of events.",
+	2: "Be concise: roughly 250-350 words. Keep only the observations with the most weight, and cut all preamble.",
 	3: "Write roughly 400-600 words: substantial, but every paragraph earning its place.",
-	4: "Be concise: roughly 250-350 words. Keep only the observations with the most weight, and cut all preamble.",
-	5: "Be very brief: roughly 120-200 words. Essential observations only, tightly written, no preamble and no restating of events.",
+	4: "Write a detailed reflection, roughly 600-900 words.",
+	5: "Write expansively, roughly 900-1300 words. Follow threads in depth and develop each observation fully.",
 };
 
 function clampStep(value: number): number {
@@ -69,7 +69,7 @@ function voiceDirective(voice: NarrativeVoice, name: string): string {
 
 export interface StyleOptions {
 	/**
-	 * Apply the brevity word-count target. Off for callers that specify their
+	 * Apply the length word-count target. Off for callers that specify their
 	 * own length (the portrait), where a global target would fight it.
 	 */
 	includeLength?: boolean;
@@ -98,7 +98,7 @@ export function buildStyleDirectives(
 
 	parts.push(voiceDirective(settings.narrativeVoice, name));
 	parts.push(DIRECTNESS_DIRECTIVE[clampStep(settings.directness)]);
-	if (includeLength) parts.push(BREVITY_DIRECTIVE[clampStep(settings.brevity)]);
+	if (includeLength) parts.push(LENGTH_DIRECTIVE[clampStep(settings.length)]);
 	parts.push(
 		`Write in Markdown. Do not wrap the response in a code fence, do not include YAML frontmatter, and do not open with a title heading — one is added automatically. These ${
 			includeLength ? "length, voice and tone" : "voice and tone"
