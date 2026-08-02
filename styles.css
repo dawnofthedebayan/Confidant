@@ -579,6 +579,7 @@
 
 /* Unknown total: sweep instead of implying a percentage. */
 .jt-progress-fill.is-indeterminate {
+	width: 100%;
 	background: linear-gradient(
 		90deg,
 		transparent 0%,

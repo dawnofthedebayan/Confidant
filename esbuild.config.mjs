@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
 import process from "process";
-import builtins from "builtin-modules";
+import { builtinModules } from "node:module";
 
 const prod = process.argv[2] === "production";
 
@@ -26,7 +26,7 @@ const context = await esbuild.context({
     // native bindings that Obsidian can't load anyway.
     "onnxruntime-node",
     "sharp",
-    ...builtins,
+    ...builtinModules,
   ],
   format: "cjs",
   // transformers.js uses BigInt literals, so es2020 is the floor here.

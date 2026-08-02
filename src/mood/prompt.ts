@@ -67,7 +67,7 @@ export function extractMoodJson(raw: string): Record<string, unknown> | null {
 	if (first === -1 || last <= first) return null;
 
 	try {
-		const parsed = JSON.parse(text.slice(first, last + 1));
+		const parsed: unknown = JSON.parse(text.slice(first, last + 1));
 		return typeof parsed === "object" && parsed !== null
 			? (parsed as Record<string, unknown>)
 			: null;

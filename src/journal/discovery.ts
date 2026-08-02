@@ -33,7 +33,7 @@ export function matchesTags(app: App, file: TFile, settings: JournalPluginSettin
 	if (!cache) return false;
 
 	const frontmatterTags: string[] = [];
-	const fm = cache.frontmatter?.tags;
+	const fm: unknown = cache.frontmatter?.tags;
 	if (typeof fm === "string") {
 		frontmatterTags.push(...fm.split(/[,\s]+/));
 	} else if (Array.isArray(fm)) {
@@ -70,8 +70,9 @@ export function matchesTags(app: App, file: TFile, settings: JournalPluginSettin
  * reshuffle entries between weeks.
  */
 export function resolveEntryDate(app: App, file: TFile): Date | null {
-	const fm = app.metadataCache.getFileCache(file)?.frontmatter;
-	return parseFrontmatterDate(fm?.date) ?? parseDateFromBasename(file.basename);
+	const fm: unknown = app.metadataCache.getFileCache(file)?.frontmatter;
+	const date = fm && typeof fm === "object" ? (fm as Record<string, unknown>).date : undefined;
+	return parseFrontmatterDate(date) ?? parseDateFromBasename(file.basename);
 }
 
 /** All eligible daily notes, grouped by ISO year/week key (`2026-W01`). */

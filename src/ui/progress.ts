@@ -53,7 +53,7 @@ export class ProgressReporter implements RunProgress {
 		this.total = total;
 		// Duration 0 keeps the notice up until we hide it ourselves.
 		this.notice = new Notice("", 0);
-		const root = this.notice.noticeEl;
+		const root = this.notice.messageEl;
 		root.empty();
 		root.addClass("jt-progress");
 
@@ -108,12 +108,12 @@ export class ProgressReporter implements RunProgress {
 	private paint(): void {
 		if (this.total > 0) {
 			const pct = Math.min(100, (this.completed / this.total) * 100);
-			this.fillEl.style.width = `${pct}%`;
+			this.fillEl.setCssStyles({ width: `${pct}%` });
 			this.fillEl.removeClass("is-indeterminate");
 			this.countEl.setText(`${this.completed} / ${this.total}`);
 		} else {
 			// Unknown total: show motion rather than a misleading percentage.
-			this.fillEl.style.width = "100%";
+			// Width is set by the is-indeterminate CSS class, not inline here.
 			this.fillEl.addClass("is-indeterminate");
 			this.countEl.setText(`${this.completed} done`);
 		}

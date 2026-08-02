@@ -3,6 +3,19 @@ import { JournalPluginSettings } from "../settings";
 import { inSourceFolder } from "./discovery";
 import { parseDateFromBasename, todayUtc } from "./dates";
 
+/**
+ * `processFrontMatter`'s callback parameter is typed `any` by Obsidian (the
+ * frontmatter shape is arbitrary user YAML) — this narrows it to `unknown`
+ * members instead, so setting the handful of fields we care about doesn't
+ * require unsafe `any` access.
+ */
+interface FrontmatterLike {
+	date?: unknown;
+	title?: unknown;
+	tags?: unknown;
+	[key: string]: unknown;
+}
+
 export interface FrontmatterBackfillResult {
 	updated: string[];
 	/** Subset of `updated` that had no date in frontmatter or filename, so today's date was used instead. */
@@ -63,7 +76,7 @@ export async function ensureFrontmatter(
 		const date = filenameDate ?? todayUtc();
 
 		try {
-			await app.fileManager.processFrontMatter(file, (fm) => {
+			await app.fileManager.processFrontMatter(file, (fm: FrontmatterLike) => {
 				fm.date = date.toISOString().slice(0, 10);
 				fm.title = file.basename;
 				fm.tags = fm.tags ?? [];

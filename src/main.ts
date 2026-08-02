@@ -205,10 +205,10 @@ export default class ConfidantPlugin extends Plugin {
 		}
 
 		const notice = new Notice("", 30_000);
-		notice.noticeEl.createDiv({
+		notice.messageEl.createDiv({
 			text: `Confidant: ${pending.length} summary/summaries pending (${summarizeKeys(pending)}).`,
 		});
-		const button = notice.noticeEl.createEl("button", {
+		const button = notice.messageEl.createEl("button", {
 			text: "Generate now",
 			cls: "confidant-notice-button",
 		});

@@ -186,10 +186,10 @@ export class InsightsView extends ItemView {
 			const magnitude = `${(Math.abs(point.valence) / 5) * 100}%`;
 			if (point.valence >= 0) {
 				const bar = up.createDiv({ cls: "jt-diverging-bar is-positive" });
-				bar.style.height = magnitude;
+				bar.setCssStyles({ height: magnitude });
 			} else {
 				const bar = down.createDiv({ cls: "jt-diverging-bar is-negative" });
-				bar.style.height = magnitude;
+				bar.setCssStyles({ height: magnitude });
 			}
 		}
 
@@ -276,7 +276,7 @@ export class InsightsView extends ItemView {
 			const col = days.createDiv({ cls: "jt-column" });
 			const track = col.createDiv({ cls: "jt-column-track" });
 			const fill = track.createDiv({ cls: "jt-column-fill" });
-			fill.style.height = `${(count / dayMax) * 100}%`;
+			fill.setCssStyles({ height: `${(count / dayMax) * 100}%` });
 			if (count === dayMax) fill.addClass("is-peak");
 			fill.setAttribute("aria-label", `${DAY_NAMES[i]}: ${count}`);
 			col.createDiv({ cls: "jt-column-label", text: DAY_NAMES[i].slice(0, 2) });
@@ -290,7 +290,7 @@ export class InsightsView extends ItemView {
 			const col = weeks.createDiv({ cls: "jt-column" });
 			const track = col.createDiv({ cls: "jt-column-track" });
 			const fill = track.createDiv({ cls: "jt-column-fill" });
-			fill.style.height = `${(week.words / weekMax) * 100}%`;
+			fill.setCssStyles({ height: `${(week.words / weekMax) * 100}%` });
 			fill.setAttribute(
 				"aria-label",
 				`${week.key}: ${week.words} words across ${week.entries} entries`
@@ -352,8 +352,10 @@ export class InsightsView extends ItemView {
 			const chip = cloud.createSpan({ cls: "jt-chip", text: word.label });
 			// Scale 0.85–1.6rem across the observed frequency range.
 			const t = max === min ? 1 : (word.count - min) / (max - min);
-			chip.style.fontSize = `${(0.85 + t * 0.75).toFixed(2)}rem`;
-			chip.style.opacity = `${(0.6 + t * 0.4).toFixed(2)}`;
+			chip.setCssStyles({
+				fontSize: `${(0.85 + t * 0.75).toFixed(2)}rem`,
+				opacity: `${(0.6 + t * 0.4).toFixed(2)}`,
+			});
 			chip.setAttribute("aria-label", `${word.label}: ${word.count}`);
 		}
 	}
@@ -430,7 +432,7 @@ export class InsightsView extends ItemView {
 			text: existing ? "Regenerate portrait" : "Generate portrait",
 			cls: "jt-button mod-cta",
 		});
-		generate.addEventListener("click", async () => {
+		const handleGenerate = async (): Promise<void> => {
 			if (!this.metrics) return;
 			generate.setAttribute("disabled", "true");
 			generate.setText("Writing…");
@@ -445,7 +447,8 @@ export class InsightsView extends ItemView {
 				generate.removeAttribute("disabled");
 				generate.setText("Generate portrait");
 			}
-		});
+		};
+		generate.addEventListener("click", () => void handleGenerate());
 	}
 }
 
@@ -467,7 +470,7 @@ function bars(parent: HTMLElement, items: Counted[], limit: number): void {
 		row.createDiv({ cls: "jt-bar-label", text: item.label });
 		const track = row.createDiv({ cls: "jt-bar-track" });
 		const fill = track.createDiv({ cls: "jt-bar-fill" });
-		fill.style.width = `${(item.count / max) * 100}%`;
+		fill.setCssStyles({ width: `${(item.count / max) * 100}%` });
 		row.createDiv({ cls: "jt-bar-value", text: String(item.count) });
 	}
 }
@@ -489,7 +492,7 @@ function divergingRows(parent: HTMLElement, slices: Slice[]): void {
 			cls: `jt-diverging-inline ${slice.average >= 0 ? "is-positive" : "is-negative"}`,
 		});
 		// Half the track is each polarity, so a |5| average fills its side.
-		bar.style.width = `${(Math.abs(slice.average) / 5) * 50}%`;
+		bar.setCssStyles({ width: `${(Math.abs(slice.average) / 5) * 50}%` });
 
 		const value = row.createDiv({ cls: "jt-bar-value" });
 		value.setText(`${slice.average > 0 ? "+" : ""}${slice.average}`);
