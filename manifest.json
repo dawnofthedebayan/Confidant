@@ -1,0 +1,11 @@
+{
+  "id": "confidant",
+  "name": "Confidant",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Reflective summaries of your daily journal at weekly, biweekly, monthly and yearly cadences, using OpenRouter or any local OpenAI-compatible server, with a three-tier memory system.",
+  "author": "Debayan Bhattacharya",
+  "authorUrl": "https://github.com/dawnofthedebayan",
+  "fundingUrl": "https://buymeacoffee.com/debayanbh",
+  "isDesktopOnly": true
+}

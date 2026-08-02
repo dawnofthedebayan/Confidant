@@ -1,0 +1,13 @@
+server:
+  host: "0.0.0.0"
+  port: 8000
+  log_level: INFO
+
+models:
+  - model_path: mlx-community/Qwen3-4B-4bit
+    model_type: lm
+    served_model_name: chat
+
+  - model_path: mlx-community/Qwen3-Embedding-0.6B-mxfp8
+    model_type: embeddings
+    served_model_name: embeddings
