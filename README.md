@@ -6,7 +6,7 @@
 
 <br clear="left">
 
-
+![Dashboard overview screenshot placeholder](screenshots/dashboard-overview.png)
 ## Why this exists
 
 Writing a journal entry is easy. Going back and actually noticing something -
